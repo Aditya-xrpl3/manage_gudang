@@ -1,7 +1,7 @@
 from django import forms
 from .models import Barang
 
-class BarangForm(form.ModelForm):
+class BarangForm(forms.ModelForm):
     class Meta:
         model = Barang
         fields = ['nama', 'tempat_produksi', 'halal', 'tanggal_kadaluarsa','stok']

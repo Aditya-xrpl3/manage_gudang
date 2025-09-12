@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title>Daftar Barang</title>
+    <style> 
+        body {
+            font-family:Arial; margin: 40px;
+        }
+        .kadaluarsa {
+            opacity: 0.5;
+            background-color: #ffe6e6;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+        .btn {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn-danger {
+            background: #dc3545
+        }
+        .btn-sm {
+            font-size: 0.8em;
+            padding: 3px 6px;
+        }
+    </style>
+</head>
+<body> 
+    <h2> 📦 Daftar Barang </h2>
+    {% if user.userprofile.role == 'pekerja' %}
+        <a href="{% url 'tambah_barang' %}" class="btn">+ Tambah Barang</a>
+    {% endif %}
+
+    <hr>
+
+    {% if barang_list %}
+        <ul style="list-style: none; padding: 0;">
+            {% for barang in barang_list %}
+                <li class="{% if barang.kadaluarsa %}kadaluarsa{% endif %}">
+                    <strong> {{barang.nama}} </strong>
+                    <small> ({{barang.tempat_produksi}}) </small>
+                    {% if baran.halal %}
+                        <span style="color: green;"> ✅Halal  </span>
+                    {% else %}
+                        <span style="color: red;"> ❌Non-Halal  </span>
+                    {% endif %}
+                    - Exp : {{barang.tanggal_kadaluarsa}}
+
+                    {% if user.userprofile.role == 'pekerja' %}
+                        <a href="{% url 'edit_barang' barang.id %}" class="btn btn-sm">Edit</a>
+                        <a href="{% url 'hapus_barang' barang.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?');">Hapus</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Belum ada barang di gudang.</p>
+    {% endif %}
+    <hr>
+    <p>Logged in as: {{ user.username }} ({{ user.userprofile.role }}) | 
+        <a href="{% url 'logout' %}">Logout</a></p>
+
+</body>    
+</html>
