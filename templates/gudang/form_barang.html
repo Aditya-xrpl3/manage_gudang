@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <title> {% if edit_mode %} Edit {%else%} Tambaha {%endif%} Barang </title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }    
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body> 
+    <h2> {% if edit_mode %} Edit {% else %} Tambah {% endif %} Barang </h2>
+
+    <form method="post"> 
+        {% csrf_token %}
+        <div class="form-group"> 
+            <label> Nama Barang : </label>
+            {{form.nama}}
+        </div>
+        <div class="form-group">
+            <label> Tempat Produksi : </label>
+            {{form.tempat_produksi}}
+        </div>
+        <div class="for-group"> 
+            <label> Halal :</label>
+            {{form.halah}} Sudah terverifikasi halal
+        </div>
+        <div class="form-group"> 
+            <label> Tanggal Kadaluarsa : </label>
+            {{form.tanggal_kadaluarsa}}
+        </div>
+        <div class="form-group"> 
+            <label> Jumlah Stok: </label>
+            {{form.stok}}
+        </div>
+
+        <button type="submit" class="btn">
+            {% if edit_mode %} Update {%else%} Simpan {% endif %}
+        </button>
+        <a href="{% url 'daftar_barang' %}"> Batal </a>
+    </form>
+</body>    
+</html>
